@@ -1,9 +1,10 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttermapsadvance/features/maps/model/coordinate.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 @immutable
-abstract class GoogleMapsState {
+abstract class GoogleMapsState extends Equatable {
   final GoogleMapController controller;
   final int currentIndex;
 
@@ -13,16 +14,15 @@ abstract class GoogleMapsState {
 class GoogleMapsStateInitial extends GoogleMapsState {
   GoogleMapsStateInitial(GoogleMapController controller, int currentIndex)
       : super(controller, currentIndex);
+
+  @override
+  List<Object> get props => [controller, currentIndex];
 }
 
 class MapsMarkerChange extends GoogleMapsState {
-  final Coordinate coordinate;
-  MapsMarkerChange(
-      GoogleMapController controller, int currentIndex, this.coordinate)
+  MapsMarkerChange(GoogleMapController controller, int currentIndex)
       : super(controller, currentIndex);
 
-  void changeSelectedMarker() {
-    controller.animateCamera(CameraUpdate.newCameraPosition(
-        CameraPosition(target: coordinate.coordinate)));
-  }
+  @override
+  List<Object> get props => [currentIndex];
 }

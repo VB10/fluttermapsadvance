@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttermapsadvance/core/extension/context_extension.dart';
 import 'package:fluttermapsadvance/features/_component/card/coordinate_card/coordinate_card.dart';
+import 'package:fluttermapsadvance/features/maps/cubit/google_maps_cubit.dart';
+import 'package:fluttermapsadvance/features/maps/cubit/google_maps_state.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../core/network/network_manager.dart';
@@ -18,8 +20,13 @@ class CirclePointsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => PointsCubit(mapService),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => PointsCubit(mapService),
+        ),
+        BlocProvider(create: (context) => GoogleMapsCubit(null)),
+      ],
       child: buildScaffoldBody(),
     );
   }
@@ -33,7 +40,7 @@ class CirclePointsView extends StatelessWidget {
                   .showSnackBar(SnackBar(content: Text("Error")));
             } else if (state.runtimeType == PointsInitial) {
               context.bloc<PointsCubit>().fetchPoints();
-            }
+            } else if (state.runtimeType == PointsCompleted) {}
           },
           builder: (context, state) {
             switch (state.runtimeType) {
@@ -70,8 +77,8 @@ class CirclePointsView extends StatelessWidget {
       child: PageView.builder(
         onPageChanged: (value) {
           context
-              .bloc<PointsCubit>()
-              .changeSelectedCoordinate(value, completed.coordinates);
+              .bloc<GoogleMapsCubit>()
+              .changeMarker(value, completed.coordinates[value]);
         },
         itemCount: completed.coordinates.length,
         controller: PageController(viewportFraction: 0.8),
@@ -81,15 +88,19 @@ class CirclePointsView extends StatelessWidget {
     );
   }
 
-  Widget pointsList(PointsCompleted completed, context) {
+  Widget pointsList(PointsCompleted completed, BuildContext context) {
     final coordinates = completed.coordinates;
-    return GoogleMap(
-      // polylines:
-      //     Set.from(coordinates.map((e) => polylineCreate(e, coordinates))),
-      markers: Set.from(coordinates.map((e) => markerCreate(
-          e, context, e == completed.coordinates[completed.selectedItem]))),
-      initialCameraPosition:
-          CameraPosition(target: coordinates.first.coordinate, zoom: 13),
+    return BlocConsumer<GoogleMapsCubit, GoogleMapsState>(
+      listener: (context, GoogleMapsState state) {},
+      builder: (context, state) => GoogleMap(
+        onMapCreated: (controller) {
+          context.bloc<GoogleMapsCubit>().initMapController(controller);
+        },
+        markers: Set.from(coordinates.map((e) => markerCreate(
+            e, context, e == completed.coordinates[state.currentIndex]))),
+        initialCameraPosition:
+            CameraPosition(target: coordinates.first.coordinate, zoom: 13),
+      ),
     );
   }
 
