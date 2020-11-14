@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'maps/view/circle_points_view.dart';
+import 'features/maps/view/circle_points_view.dart';
 
 void main() => runApp(MyApp());
 

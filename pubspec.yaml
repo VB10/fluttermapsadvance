@@ -28,6 +28,7 @@ dependencies:
   dio: ^3.0.10
   flutter_bloc: ^6.0.6
   google_maps_flutter: ^1.0.3
+  equatable: ^1.2.5
 
 dev_dependencies:
   flutter_test:
@@ -69,3 +70,4 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+

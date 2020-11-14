@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttermapsadvance/maps/model/coordinate.dart';
+import 'package:fluttermapsadvance/features/maps/model/coordinate.dart';
 
 abstract class IMapService {
   final Dio service;
