@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttermapsadvance/core/extension/context_extension.dart';
-import 'package:fluttermapsadvance/features/_component/card/coordinate_card/coordinate_card.dart';
-import 'package:fluttermapsadvance/features/maps/cubit/google_maps_cubit.dart';
-import 'package:fluttermapsadvance/features/maps/cubit/google_maps_state.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../../../core/extension/context_extension.dart';
 import '../../../core/network/network_manager.dart';
+import '../../_component/card/coordinate_card/coordinate_card.dart';
+import '../cubit/google_maps_cubit.dart';
+import '../cubit/google_maps_state.dart';
 import '../cubit/points_cubit.dart';
 import '../model/coordinate.dart';
 import '../service/IMapService.dart';
@@ -25,7 +25,7 @@ class CirclePointsView extends StatelessWidget {
         BlocProvider(
           create: (context) => PointsCubit(mapService),
         ),
-        BlocProvider(create: (context) => GoogleMapsCubit(null)),
+        BlocProvider(create: (context) => GoogleMapsCubit()),
       ],
       child: buildScaffoldBody(),
     );
