@@ -26,7 +26,7 @@ dependencies:
   bloc: ^6.1.0
   cupertino_icons: ^1.0.0
   dio: ^3.0.10
-  flutter_bloc: ^6.0.6
+  flutter_bloc: ^6.1.0
   google_maps_flutter: ^1.0.3
   equatable: ^1.2.5
 

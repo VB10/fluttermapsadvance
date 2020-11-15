@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttermapsadvance/features/maps/cubit/google_maps/google_maps_state.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../core/extension/context_extension.dart';
 import '../../../core/network/network_manager.dart';
 import '../../_component/card/coordinate_card/coordinate_card.dart';
-import '../cubit/google_maps_cubit.dart';
-import '../cubit/google_maps_state.dart';
-import '../cubit/points_cubit.dart';
+import '../cubit/google_maps/google_maps_cubit.dart';
+import '../cubit/points/points_cubit.dart';
 import '../model/coordinate.dart';
 import '../service/IMapService.dart';
 import '../service/maps_service.dart';
@@ -22,9 +22,7 @@ class CirclePointsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
-          create: (context) => PointsCubit(mapService),
-        ),
+        BlocProvider(create: (context) => PointsCubit(mapService)),
         BlocProvider(create: (context) => GoogleMapsCubit()),
       ],
       child: buildScaffoldBody(),
@@ -39,7 +37,7 @@ class CirclePointsView extends StatelessWidget {
               scaffoldKey.currentState
                   .showSnackBar(SnackBar(content: Text("Error")));
             } else if (state.runtimeType == PointsInitial) {
-              context.bloc<PointsCubit>().fetchPoints();
+              context.read<PointsCubit>().fetchPoints();
             } else if (state.runtimeType == PointsCompleted) {}
           },
           builder: (context, state) {
@@ -51,7 +49,7 @@ class CirclePointsView extends StatelessWidget {
               case PointsError:
                 return Text((state as PointsError).message);
               default:
-                context.bloc<PointsCubit>().fetchPoints();
+                context.read<PointsCubit>().fetchPoints();
                 return CircularProgressIndicator();
             }
           },
@@ -77,7 +75,7 @@ class CirclePointsView extends StatelessWidget {
       child: PageView.builder(
         onPageChanged: (value) {
           context
-              .bloc<GoogleMapsCubit>()
+              .read<GoogleMapsCubit>()
               .changeMarker(value, completed.coordinates[value]);
         },
         itemCount: completed.coordinates.length,
@@ -94,7 +92,7 @@ class CirclePointsView extends StatelessWidget {
       listener: (context, GoogleMapsState state) {},
       builder: (context, state) => GoogleMap(
         onMapCreated: (controller) {
-          context.bloc<GoogleMapsCubit>().initMapController(controller);
+          context.read<GoogleMapsCubit>().initMapController(controller);
         },
         markers: Set.from(coordinates.map((e) => markerCreate(
             e, context, e == completed.coordinates[state.currentIndex]))),

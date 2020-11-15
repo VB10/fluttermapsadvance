@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttermapsadvance/features/maps/model/coordinate.dart';
-import 'package:fluttermapsadvance/features/maps/service/IMapService.dart';
+
+import '../../model/coordinate.dart';
+import '../../service/IMapService.dart';
 
 part 'points_state.dart';
 
