@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttermapsadvance/core/network/network_manager.dart';
-import 'package:fluttermapsadvance/features/maps/cubit/cluster/cluster_cubit.dart';
-import 'package:fluttermapsadvance/features/maps/cubit/cluster/cluster_state.dart';
-import 'package:fluttermapsadvance/features/maps/model/cluster_coordinate.dart';
-import 'package:fluttermapsadvance/features/maps/service/IMapService.dart';
-import 'package:fluttermapsadvance/features/maps/service/maps_service.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+
+import '../../../core/network/network_manager.dart';
+import '../cubit/cluster/cluster_cubit.dart';
+import '../cubit/cluster/cluster_state.dart';
+import '../model/cluster_coordinate.dart';
+import '../service/IMapService.dart';
+import '../service/maps_service.dart';
 
 class ClusterPointsView extends StatelessWidget {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();

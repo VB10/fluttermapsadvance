@@ -49,12 +49,18 @@ class CirclePointsView extends StatelessWidget {
               case PointsError:
                 return Text((state as PointsError).message);
               default:
-                context.read<PointsCubit>().fetchPoints();
+                fetchPoints(context);
                 return CircularProgressIndicator();
             }
           },
         ),
       );
+
+  void fetchPoints(BuildContext context) {
+    Future.microtask(() {
+      context.read<PointsCubit>().fetchPoints();
+    });
+  }
 
   Widget pointAndPlaceView(PointsCompleted completed, BuildContext context) {
     return Stack(
