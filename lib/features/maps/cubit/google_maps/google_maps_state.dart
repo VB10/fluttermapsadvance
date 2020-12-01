@@ -25,3 +25,13 @@ class MapsMarkerChange extends GoogleMapsState {
   @override
   List<Object> get props => [currentIndex];
 }
+
+class GoogleMapsStateMarkers extends GoogleMapsState {
+  final List<Marker> marrkers;
+  GoogleMapsStateMarkers(
+      GoogleMapController controller, int currentIndex, this.marrkers)
+      : super(controller, currentIndex);
+
+  @override
+  List<Object> get props => [controller, currentIndex];
+}

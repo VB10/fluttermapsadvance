@@ -19,6 +19,14 @@ class PointsCubit extends Cubit<PointsState> {
       emit(PointsError("Data Not Found"));
   }
 
+  Future<void> fetchPointsCustomMarker() async {
+    final responseItems = await mapService.getAllPoints();
+    if (responseItems != null)
+      emit(PointsCompleted(responseItems, selectedItem: 0));
+    else
+      emit(PointsError("Data Not Found"));
+  }
+
   void changeSelectedCoordinate(int index, List<Coordinate> items) {
     final _state = state as PointsCompleted;
     emit(_state.copyWith(selectedItem: index));
