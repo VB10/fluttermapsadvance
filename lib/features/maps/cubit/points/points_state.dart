@@ -16,5 +16,15 @@ class PointsError extends PointsState {
 class PointsCompleted extends PointsState {
   final List<Coordinate> coordinates;
 
-  PointsCompleted(this.coordinates);
+  final int selectedItem;
+
+  PointsCompleted(this.coordinates, {this.selectedItem});
+
+  PointsCompleted copyWith({
+    List<Coordinate> coordinates,
+    int selectedItem,
+  }) {
+    return PointsCompleted(coordinates ?? this.coordinates,
+        selectedItem: selectedItem ?? this.selectedItem);
+  }
 }

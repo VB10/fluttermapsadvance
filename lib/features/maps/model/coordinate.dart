@@ -22,4 +22,14 @@ class Coordinate {
     data['name'] = this.name;
     return data;
   }
+
+  @override
+  bool operator ==(Object o) {
+    if (identical(this, o)) return true;
+
+    return o is Coordinate && o.lat == lat && o.long == long && o.name == name;
+  }
+
+  @override
+  int get hashCode => lat.hashCode ^ long.hashCode ^ name.hashCode;
 }
