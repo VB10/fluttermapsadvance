@@ -8,7 +8,6 @@ import '../cubit/cluster/cluster_state.dart';
 import '../cubit/google_maps/maps_cluster_cubit.dart';
 import '../cubit/google_maps/maps_cluster_state.dart';
 import '../model/cluster_coordinate.dart';
-import '../model/coordinate.dart';
 import '../service/IMapService.dart';
 import '../service/maps_service.dart';
 
