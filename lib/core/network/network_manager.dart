@@ -1,17 +1,18 @@
 import 'package:dio/dio.dart';
+import 'package:vexana/vexana.dart';
 
-class NetworkManager {
-  static NetworkManager _instace;
-  static NetworkManager get instance {
-    if (_instace == null) _instace = NetworkManager._init();
+class NetworkRequestManager {
+  static NetworkRequestManager _instace;
+  static NetworkRequestManager get instance {
+    if (_instace == null) _instace = NetworkRequestManager._init();
     return _instace;
   }
 
   final String _baseUrl = "https://hwasampleapi.firebaseio.com";
 
-  Dio service;
+  INetworkManager service;
 
-  NetworkManager._init() {
-    service = Dio(BaseOptions(baseUrl: _baseUrl));
+  NetworkRequestManager._init() {
+    service = NetworkManager(options: BaseOptions(baseUrl: _baseUrl));
   }
 }

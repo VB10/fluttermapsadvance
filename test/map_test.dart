@@ -6,7 +6,7 @@ import 'package:fluttermapsadvance/features/maps/service/maps_service.dart';
 main() {
   IMapService mapService;
   setUp(() {
-    mapService = MapService(NetworkManager.instance.service, null);
+    mapService = MapService(NetworkRequestManager.instance.service, null);
   });
 
   test('get all cluster points', () async {

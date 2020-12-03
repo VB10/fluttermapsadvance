@@ -1,6 +1,7 @@
 import 'package:fluttermapsadvance/features/maps/model/coordinate.dart';
+import 'package:vexana/vexana.dart';
 
-class ClusterCoordinate {
+class ClusterCoordinate extends INetworkModel<ClusterCoordinate> {
   List<Coordinate> coordinates = [];
 
   ClusterCoordinate({this.coordinates});
@@ -19,4 +20,8 @@ class ClusterCoordinate {
 
     return data;
   }
+
+  @override
+  ClusterCoordinate fromJson(Map<String, Object> json) =>
+      ClusterCoordinate.fromJson(json);
 }

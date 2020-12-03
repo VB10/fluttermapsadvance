@@ -16,7 +16,7 @@ class CirclePointsView extends StatelessWidget {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
 
   IMapService get mapService =>
-      MapService(NetworkManager.instance.service, scaffoldKey);
+      MapService(NetworkRequestManager.instance.service, scaffoldKey);
 
   @override
   Widget build(BuildContext context) {
