@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
         providers: [
           Provider(create: (context) => CustomMarkerManager(), lazy: true)
         ],
-        child: PolyLineView(),
+        child: ClusterPointsView(),
       ),
     );
   }

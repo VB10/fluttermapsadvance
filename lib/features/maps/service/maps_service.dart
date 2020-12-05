@@ -33,10 +33,10 @@ class MapService extends IMapService {
         method: RequestType.GET);
 
     if (response.data != null) {
+      return response.data;
+    } else {
       showErrorMessage(response.error);
       return null;
-    } else {
-      return response.data;
     }
   }
 }
