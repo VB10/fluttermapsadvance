@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:fluster/fluster.dart';
+import 'package:fluttermapsadvance/features/maps/service/IMapService.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:logger/logger.dart';
 import 'package:uuid/uuid.dart';
@@ -8,10 +9,11 @@ import '../../../../core/utility/map/map_helper.dart';
 import '../../../../core/utility/map/model/map_cluster_property.dart';
 import '../../../../core/utility/map/model/map_marker.dart';
 import '../../model/coordinate.dart';
-import 'maps_cluster_state.dart';
+import '../google_maps/../cluster/maps_cluster_state.dart';
 
 class MapsClusterCubit extends Cubit<MapsClusterState> {
-  MapsClusterCubit() : super(MapsClusterInitial());
+  MapsClusterCubit(this.mapService) : super(MapsClusterInitial());
+  final IMapService mapService;
   final Set<Marker> mapMarkers = Set();
 
   GoogleMapController controller;
@@ -19,6 +21,14 @@ class MapsClusterCubit extends Cubit<MapsClusterState> {
   Fluster<MapMarker> _clusterManager;
 
   ClusterProperty clusterProperty = MapHelper.instance.clusterProperty;
+
+  Future<void> fetchAllPoints() async {
+    final responseItems = await mapService.getClusterPoints();
+    if (responseItems != null)
+      emit(MapsClusterCompleted(responseItems));
+    else
+      emit(MapsClusterError("Data Not Found"));
+  }
 
   void initMapController(
       GoogleMapController controller, List<Coordinate> coordinates) {

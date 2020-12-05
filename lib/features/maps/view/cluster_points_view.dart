@@ -3,10 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../core/network/network_manager.dart';
-import '../cubit/cluster/cluster_cubit.dart';
-import '../cubit/cluster/cluster_state.dart';
-import '../cubit/google_maps/maps_cluster_cubit.dart';
-import '../cubit/google_maps/maps_cluster_state.dart';
+import '../cubit/cluster/maps_cluster_cubit.dart';
+import '../cubit/cluster/maps_cluster_state.dart';
 import '../model/cluster_coordinate.dart';
 import '../service/IMapService.dart';
 import '../service/maps_service.dart';
@@ -16,24 +14,23 @@ class ClusterPointsView extends StatelessWidget {
 
   IMapService get mapService =>
       MapService(NetworkRequestManager.instance.service, scaffoldKey);
+
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (context) => ClusterCubit(mapService)),
-        BlocProvider(create: (context) => MapsClusterCubit()),
-      ],
+    return BlocProvider(
+      create: (context) => MapsClusterCubit(mapService),
       child: Scaffold(
         key: scaffoldKey,
-        body: BlocConsumer<ClusterCubit, ClusterState>(
+        body: BlocConsumer<MapsClusterCubit, MapsClusterState>(
           listener: (context, state) {},
           builder: (context, state) {
             switch (state.runtimeType) {
-              case ClusterInitial:
+              case MapsClusterInitial:
                 fetchAllPoints(context);
                 return buildCenterLoading;
-              case ClusterCompleted:
-                return clusterMapView((state as ClusterCompleted).coordinate);
+              case MapsClusterCompleted:
+                return clusterMapView(
+                    (state as MapsClusterCompleted).coordinate);
               default:
                 return buildCenterLoading;
             }
@@ -45,7 +42,7 @@ class ClusterPointsView extends StatelessWidget {
 
   void fetchAllPoints(BuildContext context) {
     Future.microtask(() {
-      context.read<ClusterCubit>().fetchAllPoints();
+      context.read<MapsClusterCubit>().fetchAllPoints();
     });
   }
 

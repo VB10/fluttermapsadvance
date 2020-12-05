@@ -17,7 +17,7 @@ class MapService extends IMapService {
         parseModel: Coordinate(),
         method: RequestType.GET);
 
-    if (response.error != null) {
+    if (response.data != null) {
       return response.data;
     } else {
       showErrorMessage(response.error);
@@ -32,7 +32,7 @@ class MapService extends IMapService {
         parseModel: ClusterCoordinate(),
         method: RequestType.GET);
 
-    if (response.error != null) {
+    if (response.data != null) {
       showErrorMessage(response.error);
       return null;
     } else {
