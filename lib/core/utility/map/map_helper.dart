@@ -3,9 +3,9 @@ import 'dart:ui';
 
 import 'package:fluster/fluster.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttermapsadvance/core/utility/map/model/map_cluster_property.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import 'model/map_cluster_property.dart';
 import 'model/map_marker.dart';
 
 part './map_cluster.dart';

@@ -1,4 +1,4 @@
-import 'package:fluttermapsadvance/features/maps/model/coordinate.dart';
+import 'coordinate.dart';
 import 'package:vexana/vexana.dart';
 
 class ClusterCoordinate extends INetworkModel<ClusterCoordinate> {

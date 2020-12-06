@@ -1,4 +1,4 @@
-import 'package:fluttermapsadvance/features/maps/model/cluster_coordinate.dart';
+import '../../model/cluster_coordinate.dart';
 
 abstract class ClusterState {}
 

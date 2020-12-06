@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:fluttermapsadvance/features/_product/custom_marker.dart';
-import 'package:fluttermapsadvance/features/maps/view/poly_line_view.dart';
 import 'package:provider/provider.dart';
 
-import 'features/maps/view/circle_points_view.dart';
+import 'features/_product/custom_marker.dart';
 import 'features/maps/view/cluster_points_view.dart';
 
 void main() => runApp(MyApp());

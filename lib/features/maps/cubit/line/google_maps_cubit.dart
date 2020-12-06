@@ -1,16 +1,18 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttermapsadvance/features/_product/custom_marker.dart';
-import 'package:fluttermapsadvance/features/maps/model/coordinate.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 
+import '../../../_product/custom_marker.dart';
+import '../../model/coordinate.dart';
 import 'google_maps_state.dart';
 
 class LineCubit extends Cubit<LineState> {
   LineCubit() : super(GoogleMapsStateInitial(null, 0));
 
   List<Marker> markers = [];
+  final int _markersWidth = 50;
+
   void initMapController(GoogleMapController controller) {
     emit(GoogleMapsStateInitial(controller, 0));
   }
@@ -24,7 +26,7 @@ class LineCubit extends Cubit<LineState> {
           value: i,
           clusterColor: Colors.orange,
           textColor: Colors.white,
-          width: 50);
+          width: _markersWidth);
 
       markers.add(Marker(
           markerId: MarkerId(i.toString()),
