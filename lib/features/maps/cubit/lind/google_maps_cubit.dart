@@ -7,8 +7,8 @@ import 'package:provider/provider.dart';
 
 import 'google_maps_state.dart';
 
-class GoogleMapsCubit extends Cubit<GoogleMapsState> {
-  GoogleMapsCubit() : super(GoogleMapsStateInitial(null, 0));
+class LineCubit extends Cubit<LineState> {
+  LineCubit() : super(GoogleMapsStateInitial(null, 0));
 
   List<Marker> markers = [];
   void initMapController(GoogleMapController controller) {

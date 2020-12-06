@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../core/network/network_manager.dart';
+import '../cubit/cluster/cluster_cubit.dart';
+import '../cubit/cluster/cluster_state.dart';
 import '../cubit/cluster/maps_cluster_cubit.dart';
 import '../cubit/cluster/maps_cluster_state.dart';
 import '../model/cluster_coordinate.dart';
@@ -14,23 +16,24 @@ class ClusterPointsView extends StatelessWidget {
 
   IMapService get mapService =>
       MapService(NetworkRequestManager.instance.service, scaffoldKey);
-
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => MapsClusterCubit(mapService),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => ClusterCubit(mapService)),
+        BlocProvider(create: (context) => MapsClusterCubit()),
+      ],
       child: Scaffold(
         key: scaffoldKey,
-        body: BlocConsumer<MapsClusterCubit, MapsClusterState>(
+        body: BlocConsumer<ClusterCubit, ClusterState>(
           listener: (context, state) {},
           builder: (context, state) {
             switch (state.runtimeType) {
-              case MapsClusterInitial:
+              case ClusterInitial:
                 fetchAllPoints(context);
                 return buildCenterLoading;
-              case MapsClusterCompleted:
-                return clusterMapView(
-                    (state as MapsClusterCompleted).coordinate);
+              case ClusterCompleted:
+                return clusterMapView((state as ClusterCompleted).coordinate);
               default:
                 return buildCenterLoading;
             }
@@ -42,7 +45,7 @@ class ClusterPointsView extends StatelessWidget {
 
   void fetchAllPoints(BuildContext context) {
     Future.microtask(() {
-      context.read<MapsClusterCubit>().fetchAllPoints();
+      context.read<ClusterCubit>().fetchAllPoints();
     });
   }
 
