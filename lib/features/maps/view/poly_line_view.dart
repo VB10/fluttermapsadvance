@@ -36,9 +36,7 @@ class PolyLineView extends StatelessWidget {
             if (state.runtimeType == PointsError) {
               scaffoldKey.currentState
                   .showSnackBar(SnackBar(content: Text("Error")));
-            } else if (state.runtimeType == PointsInitial) {
-              context.read<PointsCubit>().fetchPoints();
-            } else if (state.runtimeType == PointsCompleted) {}
+            }
           },
           builder: (context, state) {
             switch (state.runtimeType) {
