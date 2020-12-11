@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttermapsadvance/features/maps/view/poly_line_view.dart';
 import 'package:provider/provider.dart';
 
 import 'features/_product/custom_marker.dart';
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
         providers: [
           Provider(create: (context) => CustomMarkerManager(), lazy: true)
         ],
-        child: ClusterPointsView(),
+        child: PolyLineView(),
       ),
     );
   }
