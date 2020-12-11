@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttermapsadvance/features/maps/view/circle_points_view.dart';
 import 'package:fluttermapsadvance/features/maps/view/poly_line_view.dart';
 import 'package:provider/provider.dart';
 
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
         providers: [
           Provider(create: (context) => CustomMarkerManager(), lazy: true)
         ],
-        child: PolyLineView(),
+        child: CirclePointsView(),
       ),
     );
   }
