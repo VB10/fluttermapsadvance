@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
-import 'package:fluttermapsadvance/features/maps/service/IMapService.dart';
 
+import '../../service/IMapService.dart';
 import 'cluster_state.dart';
 
 class ClusterCubit extends Cubit<ClusterState> {

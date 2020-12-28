@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttermapsadvance/features/maps/cubit/google_maps/google_maps_state.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../core/extension/context_extension.dart';
 import '../../../core/network/network_manager.dart';
 import '../../_component/card/coordinate_card/coordinate_card.dart';
-import '../cubit/google_maps/google_maps_cubit.dart';
+import '../cubit/line/google_maps_cubit.dart';
+import '../cubit/line/google_maps_state.dart';
 import '../cubit/points/points_cubit.dart';
 import '../model/coordinate.dart';
 import '../service/IMapService.dart';
@@ -16,14 +16,14 @@ class PolyLineView extends StatelessWidget {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
 
   IMapService get mapService =>
-      MapService(NetworkManager.instance.service, scaffoldKey);
+      MapService(NetworkRequestManager.instance.service, scaffoldKey);
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => PointsCubit(mapService)),
-        BlocProvider(create: (context) => GoogleMapsCubit()),
+        BlocProvider(create: (context) => LineCubit()),
       ],
       child: buildScaffoldBody(),
     );
@@ -36,9 +36,7 @@ class PolyLineView extends StatelessWidget {
             if (state.runtimeType == PointsError) {
               scaffoldKey.currentState
                   .showSnackBar(SnackBar(content: Text("Error")));
-            } else if (state.runtimeType == PointsInitial) {
-              context.read<PointsCubit>().fetchPoints();
-            } else if (state.runtimeType == PointsCompleted) {}
+            }
           },
           builder: (context, state) {
             switch (state.runtimeType) {
@@ -81,7 +79,7 @@ class PolyLineView extends StatelessWidget {
       child: PageView.builder(
         onPageChanged: (value) {
           context
-              .read<GoogleMapsCubit>()
+              .read<LineCubit>()
               .changeMarker(value, completed.coordinates[value]);
         },
         itemCount: completed.coordinates.length,
@@ -94,8 +92,8 @@ class PolyLineView extends StatelessWidget {
 
   Widget pointsList(PointsCompleted completed, BuildContext context) {
     final coordinates = completed.coordinates;
-    return BlocConsumer<GoogleMapsCubit, GoogleMapsState>(
-      listener: (context, GoogleMapsState state) {},
+    return BlocConsumer<LineCubit, LineState>(
+      listener: (context, LineState state) {},
       builder: (context, state) {
         List<Marker> markers = [];
         int selectedLines = 0;
@@ -103,13 +101,13 @@ class PolyLineView extends StatelessWidget {
           markers = state.marrkers;
         } else if (state is MapsMarkerChange) {
           selectedLines = state.currentIndex;
-          markers = context.watch<GoogleMapsCubit>().markers;
+          markers = context.watch<LineCubit>().markers;
         }
 
         return GoogleMap(
           onMapCreated: (controller) {
             context
-                .read<GoogleMapsCubit>()
+                .read<LineCubit>()
                 .initMapControllerMarkers(controller, context, coordinates);
           },
           polylines: Set.from([polylineCreate(markers, selectedLines)]),
@@ -137,11 +135,3 @@ class PolyLineView extends StatelessWidget {
     );
   }
 }
-
-// Polyline polylineCreate(Coordinate e, List<Coordinate> coordinates) {
-//   return Polyline(
-//       color: Colors.orange,
-//       width: 3,
-//       polylineId: PolylineId(e.name),
-//       points: coordinates.map((e) => e.coordinate).toList());
-// }

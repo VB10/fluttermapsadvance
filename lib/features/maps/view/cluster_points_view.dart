@@ -5,10 +5,9 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../../core/network/network_manager.dart';
 import '../cubit/cluster/cluster_cubit.dart';
 import '../cubit/cluster/cluster_state.dart';
-import '../cubit/google_maps/maps_cluster_cubit.dart';
-import '../cubit/google_maps/maps_cluster_state.dart';
+import '../cubit/cluster/maps_cluster_cubit.dart';
+import '../cubit/cluster/maps_cluster_state.dart';
 import '../model/cluster_coordinate.dart';
-import '../model/coordinate.dart';
 import '../service/IMapService.dart';
 import '../service/maps_service.dart';
 
@@ -16,7 +15,7 @@ class ClusterPointsView extends StatelessWidget {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
 
   IMapService get mapService =>
-      MapService(NetworkManager.instance.service, scaffoldKey);
+      MapService(NetworkRequestManager.instance.service, scaffoldKey);
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(

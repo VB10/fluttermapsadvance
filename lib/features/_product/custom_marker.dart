@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:fluttermapsadvance/core/utility/map/map_marker.dart';
+import '../../core/utility/map/map_marker.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class CustomMarkerManager extends CustomMarker {

@@ -1,6 +1,7 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:vexana/vexana.dart';
 
-class Coordinate {
+class Coordinate extends INetworkModel<Coordinate> {
   double lat;
   double long;
   String name;
@@ -32,4 +33,7 @@ class Coordinate {
 
   @override
   int get hashCode => lat.hashCode ^ long.hashCode ^ name.hashCode;
+
+  @override
+  Coordinate fromJson(Map<String, Object> json) => Coordinate.fromJson(json);
 }

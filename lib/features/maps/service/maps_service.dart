@@ -1,39 +1,41 @@
-import 'dart:io';
-
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttermapsadvance/core/constants/network_path.dart';
-import 'package:fluttermapsadvance/features/maps/model/cluster_coordinate.dart';
+import 'package:vexana/vexana.dart';
 
+import '../../../core/constants/network_path.dart';
+import '../model/cluster_coordinate.dart';
 import '../model/coordinate.dart';
 import 'IMapService.dart';
 
 class MapService extends IMapService {
-  MapService(Dio service, GlobalKey<ScaffoldState> scaffoldKey)
+  MapService(INetworkManager service, GlobalKey<ScaffoldState> scaffoldKey)
       : super(service, scaffoldKey);
 
   @override
   Future<List<Coordinate>> getAllPoints() async {
-    final response = await service.get(NetworkPath.POINTS.rawValue);
+    final response = await service.fetch<Coordinate, List<Coordinate>>(
+        NetworkPath.POINTS.rawValue,
+        parseModel: Coordinate(),
+        method: RequestType.GET);
 
-    if (response.statusCode == HttpStatus.ok) {
-      final responseBody = response.data as List;
-      return responseBody.map((e) => Coordinate.fromJson(e)).toList();
+    if (response.data != null) {
+      return response.data;
     } else {
-      showErrorMessage(response);
+      showErrorMessage(response.error);
       return null;
     }
   }
 
   @override
   Future<ClusterCoordinate> getClusterPoints() async {
-    final response = await service.get(NetworkPath.CLUSTER.rawValue);
+    final response = await service.fetch<ClusterCoordinate, ClusterCoordinate>(
+        NetworkPath.CLUSTER.rawValue,
+        parseModel: ClusterCoordinate(),
+        method: RequestType.GET);
 
-    if (response.statusCode == HttpStatus.ok) {
-      final responseBody = response.data as Map;
-      return ClusterCoordinate.fromJson(responseBody);
-    } else {
-      showErrorMessage(response);
+    if (response.data != null)
+      return response.data;
+    else {
+      showErrorMessage(response.error);
       return null;
     }
   }

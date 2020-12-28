@@ -8,7 +8,7 @@ import '../../../../core/utility/map/map_helper.dart';
 import '../../../../core/utility/map/model/map_cluster_property.dart';
 import '../../../../core/utility/map/model/map_marker.dart';
 import '../../model/coordinate.dart';
-import 'maps_cluster_state.dart';
+import '../google_maps/../cluster/maps_cluster_state.dart';
 
 class MapsClusterCubit extends Cubit<MapsClusterState> {
   MapsClusterCubit() : super(MapsClusterInitial());
